@@ -1,0 +1,37 @@
+.loginFormWrapper {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loginForm {
+    padding: 80px 140px;
+    background-color: #F1ECE6;
+    border-radius: 15px;
+}
+
+.input {
+    width: 100%;
+    background-color: #e1e1e1;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 15px;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+.submitButton {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    background-color: #3E46E1;
+    color: #FFF;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.inputError {
+    color: #D20505;
+}

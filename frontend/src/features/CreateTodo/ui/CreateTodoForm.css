@@ -1,0 +1,51 @@
+.formWrapper {
+    margin: 30px;
+}
+
+.addTodoForm {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+
+.input {
+    width: 100%;
+    background-color: #e1e1e1;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 15px;
+    font-size: 16px;
+}
+
+.input-description {
+    font-family: Inter;
+    padding-bottom: 50px;
+    font-size: 16px;
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    white-space: pre-wrap;
+    display: block;
+}
+
+.submitButton {
+    width: 50%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background-color: #3E46E1;
+    color: #FFF;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.submitButton_wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.inputError {
+    color: #D20505;
+}
