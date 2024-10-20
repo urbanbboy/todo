@@ -1,5 +1,7 @@
-import './PageLoader.css'
+import { Spin } from 'antd';
 
 export const PageLoader = () => {
-    return <span className="loader"></span>
+    return (
+        <Spin size="large" fullscreen />
+    )
 }

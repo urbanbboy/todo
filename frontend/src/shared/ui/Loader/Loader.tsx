@@ -1,5 +1,9 @@
-import './Loader.css'
+import { Flex, Spin } from 'antd';
 
 export const Loader = () => {
-    return <span className="loader"></span>
+    return (
+        <Flex justify={'center'} align={'center'} style={{ margin: '30px' }}>
+            <Spin />
+        </Flex>
+    )
 }

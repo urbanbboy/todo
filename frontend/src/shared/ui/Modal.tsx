@@ -21,9 +21,10 @@ export const ReactModal = (props: ReactModalProps) => {
 
     const modalStyles = {
         modal: {
+            background: '#77545D',
             fontFamily: 'Inter',
             borderRadius: '10px',
-            width
+            width,
         },
     };
 

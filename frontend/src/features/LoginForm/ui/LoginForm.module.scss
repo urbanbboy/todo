@@ -9,6 +9,8 @@
     padding: 80px 140px;
     background-color: #F1ECE6;
     border-radius: 15px;
+    background-color: var(--primary-color);
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
 }
 
 .input {
@@ -35,3 +37,16 @@
 .inputError {
     color: #D20505;
 }
+
+.registerLink {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.registerTitle {
+    color: #FFF;
+    font-size: 13px;
+    padding-top: 3px;
+    }

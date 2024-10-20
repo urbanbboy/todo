@@ -1,3 +1,16 @@
+
 .app {
-    min-height: 100vh;
+    height: 100%;
+}
+
+.container {
+    background: rgb(87,79,90);
+    background: -moz-linear-gradient(90deg, rgba(87,79,90,1) 0%, rgba(205,175,165,1) 100%);
+    background: -webkit-linear-gradient(90deg, rgba(87,79,90,1) 0%, rgba(205,175,165,1) 100%);
+    background: linear-gradient(90deg, rgba(87,79,90,1) 0%, rgba(205,175,165,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#574f5a",endColorstr="#cdafa5",GradientType=1);
+}
+
+.sidebarBackground {
+    background: #574f5a;
 }

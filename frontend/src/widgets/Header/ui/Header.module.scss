@@ -1,0 +1,34 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--primary-color);
+    border-radius: 10px;
+    margin: 15px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+}
+
+.avatar {
+    background-color: var(--secondary-color);
+}
+
+.collapseButton {
+    font-size: 16px;
+    width: 64px;
+    height: 64px;
+}
+
+.menuCollapse {
+    color: var(--secondary-color);
+}
+
+.userInfo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.username {
+    color: var(--secondary-color);
+    font-size: 16px;
+}

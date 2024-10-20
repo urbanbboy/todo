@@ -1,11 +1,11 @@
-import { USER } from "@/shared/consts/userConst"
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { UserData, UserLoginData, UserState } from "../types/UserType"
+import { USER } from "@/shared/consts/userConst"
 
 
 const initialState: UserState = {
     userAuthData: undefined,
-    userData: undefined
+    userData: undefined,
 }
 
 export const userSlice = createSlice({
@@ -17,9 +17,12 @@ export const userSlice = createSlice({
         },
         logout: (state) => {
             state.userAuthData = undefined
+            state.userData = undefined
+            localStorage.removeItem(USER.REFRESH_TOKEN)
             localStorage.removeItem(USER.ACCESS_TOKEN)
+            localStorage.removeItem(USER.USER_DATA)
         },
-        setUserData: (state, action: PayloadAction<UserData>) => {
+        setUserData: (state, action: PayloadAction<UserData | undefined>) => {
             state.userData = action.payload
         }
     }

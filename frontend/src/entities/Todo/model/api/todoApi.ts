@@ -1,8 +1,14 @@
-import { baseApi } from "@/shared/api/baseApi";
-import { addTodoResponse, deleteTodoResponse, EditTodoData, ITodo, newTodo } from "../types/TodoType";
+import { 
+    addTodoResponse, 
+    deleteTodoResponse, 
+    EditTodoData, 
+    ITodo, 
+    newTodo 
+} from "../types/TodoType";
+import { baseApiWithReAuth } from "@/shared/api/baseApiWithReAuth";
 
 
-export const todoApi = baseApi.injectEndpoints({
+export const todoApi = baseApiWithReAuth.injectEndpoints({
     endpoints: (build) => ({
         getTodos: build.query<ITodo[], void>({
             query: () => ({

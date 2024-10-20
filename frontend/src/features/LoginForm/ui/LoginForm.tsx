@@ -2,14 +2,19 @@ import { LoginSchema, useAuth, useLoginMutation } from "@/entities/User"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { useForm } from "react-hook-form"
 import * as Yup from 'yup'
-import './LoginForm.css'
-import { useNavigate } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
+import { Button, Typography } from "antd"
 import { RouteNames } from "@/app/providers/RouterProvider"
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query"
 import { UserLoginError } from "@/entities/User/model/types/UserType"
 import { toast } from "react-toastify"
+import cls from './LoginForm.module.scss'
+import { Loader } from "@/shared/ui/Loader"
 
-export const LoginForm = () => {
+const { Paragraph, Link } = Typography
+
+
+const LoginForm = () => {
     const {
         register,
         handleSubmit,
@@ -21,6 +26,7 @@ export const LoginForm = () => {
 
     const [login, { isLoading }] = useLoginMutation()
     const navigate = useNavigate()
+    const location = useLocation()
     const userAuth = useAuth()
 
     const onSubmit = async (data: Yup.InferType<typeof LoginSchema>) => {
@@ -28,8 +34,17 @@ export const LoginForm = () => {
             .unwrap()
             .then((data) => {
                 userAuth.login(data)
-                userAuth.setUserData(data.user)
-                navigate(RouteNames.TODO_PAGE)
+                userAuth.getMe()
+                    ?.unwrap()
+                    .then(() => {
+                        if (location.state?.from) {
+                            return navigate(location.state?.from, {
+                                replace: true,
+                            });
+                        }
+
+                        navigate(RouteNames.TODO_PAGE);
+                    });
             })
             .catch((error: FetchBaseQueryError) => {
                 const data = error.data as UserLoginError;
@@ -38,29 +53,35 @@ export const LoginForm = () => {
     }
 
     return (
-        <div className="loginFormWrapper">
-            <form className="loginForm" onSubmit={handleSubmit(onSubmit)} noValidate>
-
+        <div className={cls.loginFormWrapper}>
+            <form className={cls.loginForm} onSubmit={handleSubmit(onSubmit)} noValidate>
                 <input
                     required
                     type="text"
                     placeholder="Имя пользователя"
-                    className="input"
+                    className={cls.input}
                     {...register('username')}
                 />
-                <p className="inputError">{errors.username?.message}</p>
+                <Paragraph className={cls.inputError}>{errors.username?.message}</Paragraph>
                 <input
                     required
                     type="password"
                     placeholder="Пароль"
-                    className="input"
+                    className={cls.input}
                     {...register('password')}
                 />
-                <p className="inputError">{errors.password?.message}</p>
-                <button className="submitButton" type="submit">
-                    {isLoading ? <div>загрузка</div> : <div>Войти</div>}
-                </button>
+                <Paragraph className={cls.inputError}>{errors.password?.message}</Paragraph>
+                <Button className={cls.submitButton} htmlType="submit">
+                    {isLoading ? <Loader /> : <div>Войти</div>}
+                </Button>
+                <div className={cls.registerLink}>
+                    <div className={cls.registerTitle}>Нет аккаунта?</div>
+                    <Link href={RouteNames.REGISTER_PAGE}>Зарегистрироваться</Link>
+                </div>
             </form>
+
         </div>
     )
 }
+
+export default LoginForm

@@ -20,7 +20,6 @@ export const CheckBox = (props: CheckBoxProps) => {
                 onChange={handleCheckboxChange}
                 checked={checked}
                 type="checkbox"
-                // id="cbtest-19"
             />
             <label htmlFor={`todo-checkbox-${id}`} className="check-box" />
         </div>

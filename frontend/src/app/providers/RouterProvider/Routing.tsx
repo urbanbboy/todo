@@ -4,6 +4,8 @@ import { PrivateRoute } from "./PrivateRoute"
 import { ReactNode, Suspense } from "react"
 import { PageLoader } from "@/shared/ui/PageLoader"
 import { Header } from "@/widgets/Header"
+import { Layout } from "antd"
+import { Sidebar } from "@/widgets/Sidebar"
 
 
 export const Routing = () => {
@@ -11,13 +13,29 @@ export const Routing = () => {
         return <Suspense fallback={<PageLoader />} >{element}</Suspense>
     }
 
-    const withLayout = (element: ReactNode, layout: boolean | 'header' | 'footer') => {
-        if(layout == 'header') {
+    const withLayout = (element: ReactNode, layout: boolean | 'header' | 'sidebar') => {
+        if (layout == 'header') {
             return (
-                <>
-                    <Header/>
-                    {element}
-                </>
+                <Layout className="container">
+                    <Header />
+                    <Layout.Content>
+                        {element}
+                    </Layout.Content>
+                </Layout>
+            )
+        }
+
+        if (layout == true) {
+            return (
+                <Layout className="sidebarBackground">
+                    <Sidebar />
+                    <Layout className="container">
+                        <Header />
+                        <Layout.Content>
+                            {element}
+                        </Layout.Content>
+                    </Layout>
+                </Layout>
             )
         }
 

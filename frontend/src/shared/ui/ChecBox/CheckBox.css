@@ -1,6 +1,6 @@
 .checkbox-wrapper-19 {
     box-sizing: border-box;
-    --background-color: #F1ECE6;
+    --background-color: var(--primary-color);
     --checkbox-height: 25px;
   }
 
@@ -75,7 +75,7 @@
     height: var(--checkbox-height);
     width: var(--checkbox-height);
     background-color: transparent;
-    border: calc(var(--checkbox-height) * .1) solid #000;
+    border: calc(var(--checkbox-height) * .1) solid #A1A0A0;
     border-radius: 5px;
     position: relative;
     display: inline-block;

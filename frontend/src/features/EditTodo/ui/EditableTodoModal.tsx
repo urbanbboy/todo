@@ -1,10 +1,12 @@
+import { useCallback } from "react";
+import { useDispatch } from "react-redux";
 import { Input } from "@/shared/ui/Input";
 import { ReactModal as Modal } from "@/shared/ui/Modal";
 import { AppDispatch } from "@/app/providers/StoreProvider";
 import { todoActions } from "@/entities/Todo";
-import { useDispatch } from "react-redux";
 import { CheckBox } from "@/shared/ui/ChecBox";
-import { useCallback } from "react";
+import cls from './EditableTodoModal.module.scss'
+import { Button, Spin } from "antd";
 
 interface EditableTodoModalProps {
     isOpen: boolean;
@@ -19,6 +21,7 @@ interface EditableTodoModalProps {
     onChangeText: (text: string) => void;
     onChangeDescription: (description: string) => void;
     isDeleteLoading: boolean;
+    isEditLoading: boolean;
 }
 
 export const EditableTodoModal = (props: EditableTodoModalProps) => {
@@ -34,7 +37,8 @@ export const EditableTodoModal = (props: EditableTodoModalProps) => {
         onChangeCompleted,
         onChangeText,
         onChangeDescription,
-        isDeleteLoading
+        isDeleteLoading,
+        isEditLoading
     } = props;
 
     const dispatch = useDispatch<AppDispatch>();
@@ -44,7 +48,7 @@ export const EditableTodoModal = (props: EditableTodoModalProps) => {
 
     return (
         <Modal isOpen={isOpen} onClose={onClose}>
-            <div className="modalWrapper">
+            <div className={cls.modalWrapper}>
                 <Input
                     value={text}
                     readOnly={readOnly}
@@ -57,24 +61,28 @@ export const EditableTodoModal = (props: EditableTodoModalProps) => {
                     onChange={onChangeDescription}
                     placeholder="Описание"
                 />
-                <div className="modal_buttons">
+                <div className={cls.modalButtons}>
                     {readOnly ? (
-                        <button onClick={onClickEdit} className="modal_buttons-edit">
+                        <Button onClick={onClickEdit} className={cls.modalButtonsEdit}>
                             Редактировать
-                        </button>
+                        </Button>
                     ) : (
-                        <button onClick={onSaveTodo} className="modal_buttons-edit">
-                            Сохранить
-                        </button>
+                        <Spin spinning={isEditLoading}>
+                            <Button onClick={onSaveTodo} className={cls.modalButtonsEdit} disabled={isEditLoading}>
+                                Сохранить
+                            </Button>
+                        </Spin>
                     )}
                     <CheckBox
                         checked={completed}
                         onChange={onChangeCompleted}
                     />
-                    <button onClick={handleDelete} className="modal_buttons-delete" disabled={isDeleteLoading}>
-                        {/* {isLoading ? <ButtonLoader /> : <div>Удалить</div>} */}
-                        Удалить
-                    </button>
+                    <Spin spinning={isDeleteLoading}>
+                        <Button onClick={handleDelete} className={cls.modalButtonsDelete} disabled={isDeleteLoading}>
+                            Удалить
+                        </Button>
+                    </Spin>
+
                 </div>
             </div>
         </Modal>

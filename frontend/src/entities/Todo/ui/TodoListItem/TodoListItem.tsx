@@ -6,10 +6,11 @@ import { CheckBox } from "@/shared/ui/ChecBox";
 import { getIsReadOnly } from "../../model/selectors/getIsReadOnly";
 import { EditData, ErrorResponse, ITodo } from "../../model/types/TodoType";
 import { useDeleteTodoMutation, useEditTodoMutation } from "../../model/api/todoApi";
-import './TodoListItem.css';
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { AppDispatch } from "@/app/providers/StoreProvider";
 import { todoActions } from "../../model/slice/todoSlice";
+import cls from './TodoListItem..module.scss';
+import { Spin } from "antd";
 
 interface TodoListItemProps {
     todo: ITodo;
@@ -60,10 +61,10 @@ export const TodoListItem = (props: TodoListItemProps) => {
             .then((data) => {
                 toast(data.message)
             })
-    }, [])
+    }, [deleteTodo, todo._id])
 
     const onChangeCompleted = useCallback(async (completed: boolean) => {
-        setEditedTodo((prev) => ({ ...prev, completed })); 
+        setEditedTodo((prev) => ({ ...prev, completed }));
 
         await editTodo({
             todoId: todo._id,
@@ -77,16 +78,15 @@ export const TodoListItem = (props: TodoListItemProps) => {
     }, [todo._id, editedTodo, editTodo]);
 
     const todoClasses = [
-        'todoItem',
-        todo.completed ? 'todoItem_completed' : '',
-        isEditLoading ? 'todoItem_loading' : '',
+        cls.todoItem,
+        todo.completed ? cls.todoItemCompleted : '',
     ].join(' ')
 
 
     return (
-        <>
-            <li className={todoClasses}>
-                <h3 onClick={onClickOpenModal} className="todoItem_title">
+        <Spin spinning={isEditLoading} wrapperClassName={cls.todoSpinWrapper}>
+            <div className={todoClasses}>
+                <h3 onClick={onClickOpenModal} className={cls.todoItemTitle}>
                     {todo.text}
                 </h3>
                 <CheckBox
@@ -94,7 +94,7 @@ export const TodoListItem = (props: TodoListItemProps) => {
                     checked={todo.completed}
                     onChange={onChangeCompleted}
                 />
-            </li>
+            </div>
             <EditableTodoModal
                 isOpen={modalVisible}
                 onClose={onClose}
@@ -108,8 +108,8 @@ export const TodoListItem = (props: TodoListItemProps) => {
                 onChangeText={(newText) => setEditedTodo({ ...editedTodo, text: newText })}
                 onChangeDescription={(newDescription) => setEditedTodo({ ...editedTodo, description: newDescription })}
                 isDeleteLoading={isDeleteLoading}
+                isEditLoading={isEditLoading}
             />
-
-        </>
+        </Spin>
     );
 };

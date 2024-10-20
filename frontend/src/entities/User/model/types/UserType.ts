@@ -7,20 +7,39 @@ export interface UserData {
 }
 
 export interface UserLoginData {
-    token: string;
-    user: UserData;
+    accessToken: string;
+    refreshToken: string;
+    // user: UserData;
     message: string;
+}
+
+export interface UserReAuthData {
+    accessToken: string;
+    refreshToken: string;
+}
+
+export interface userAuthData {
+    accessToken: string;
+    refreshToken: string;
 }
 
 export interface UserLoginError {
     message: string;
 }
 
+export interface UserLogoutData {
+    message: string;
+}
+
 export interface UserState {
-    userAuthData: UserLoginData | undefined;
+    userAuthData: userAuthData | undefined;
     userData: UserData | undefined;
 }
 
+export interface AboutMeResponse {
+    message: string;
+    result: UserData;
+}
 
 // "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MDY0ZmM0YjQzYTQ2ZWQ4MTUxYjJlOSIsImlhdCI6MTcyODQ2ODkzNiwiZXhwIjoxNzMxMDYwOTM2fQ.Hn6yReFKQfjI_3UkOoudhMlfoHbP8yltGPSOE8Ui62w",
 // "user": {
@@ -37,11 +56,3 @@ export interface UserState {
 //     "__v": 0
 // },
 // "message": "Вы вошли в систему."
-
-// "user": {
-//     "username": "user2",
-//     "todos": [],
-//     "_id": "67075bb35869aab71445802d"
-// },
-// "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MDc1YmIzNTg2OWFhYjcxNDQ1ODAyZCIsImlhdCI6MTcyODUzNTQ3NSwiZXhwIjoxNzMxMTI3NDc1fQ.JbtbcDBn6nOmLIP3bxWJRNEZUlyFmMAit85gsbDxLuE",
-// "message": "Регистрация прошла успешно."

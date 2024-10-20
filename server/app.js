@@ -2,16 +2,20 @@ import express from 'express'
 import mongoose from 'mongoose'
 import cors from 'cors'
 import { check } from 'express-validator'
-
+import dotenv from 'dotenv';
 import {router as authRoute} from './routes/auth.js'
 import {router as todoRoute} from './routes/todo.js'
 
-export const JWT_SECRET = 'jljksdafu929320rif024f'
+// export const JWT_SECRET = 'jljksdafu929320rif024f'
 const app = express()
+dotenv.config();
 
 //middleware
 app.use(express.json())
-app.use(cors())
+app.use(cors({
+    origin: 'http://localhost:3000',
+    credentials: true
+}))
 
 
 //routes

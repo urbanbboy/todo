@@ -4,10 +4,10 @@ import { RouteNames } from "./routeConfig";
 import { useAuth } from "@/entities/User";
 
 export const PrivateRoute: FC<PropsWithChildren> = ({ children }) => {
-    const { isAuth } = useAuth()
+    const { currentUser } = useAuth()
     const { pathname } = useLocation()
 
-    if(!isAuth) {
+    if(!currentUser) {
         return <Navigate to={RouteNames.LOGIN_PAGE} state={{ from: pathname }} />
     }
 
