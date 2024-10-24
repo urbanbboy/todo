@@ -3,7 +3,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 // import { JWT_SECRET } from '../app.js';
 import { validationResult } from 'express-validator';
-import { generateAccessToken, generateRefreshToken } from '../utils/tokenGenerators.js'
+import { generateAccessToken, generateRefreshToken, saveToken } from '../utils/tokenGenerators.js'
 
 
 export const register = async (req, res) => {
@@ -35,20 +35,18 @@ export const register = async (req, res) => {
 
         const accessToken = generateAccessToken(newUser._id)
         const refreshToken = generateRefreshToken(newUser._id)
-
         await newUser.save()
+        await saveToken(newUser._id, refreshToken)
 
-        const userData = newUser.toObject()
-        delete userData.password
 
         res.status(201).json({
-            // user: userData,
             accessToken,
             refreshToken,
             message: 'Регистрация прошла успешно.'
         })
 
     } catch (error) {
+        console.log(error)
         res.status(500).json({ message: 'Ошибка при создании пользователя.' })
     }
 }
@@ -70,16 +68,13 @@ export const login = async (req, res) => {
 
         const accessToken = generateAccessToken(user._id)
         const refreshToken = generateRefreshToken(user._id)
+        await saveToken(user._id, refreshToken);
 
-        await user.save()
-
-        const userData = user.toObject()
-        delete userData.password
+        // await user.save()
 
         res.status(200).json({
             accessToken,
             refreshToken,
-            // user: userData,
             message: 'Вы вошли в систему.'
         })
     } catch (error) {
@@ -97,10 +92,15 @@ export const refreshToken = async (req, res) => {
     try {
         // Проверка валидности токена
         const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET);
+        
+        const user = await User.findById(decoded._id);
+        if (!user) {
+            return res.status(403).json({ message: 'Пользователь не найден' });
+        }
 
-        // Создаем новый AccessToken
         const newAccessToken = generateAccessToken(decoded._id);
         const newRefreshToken = generateRefreshToken(decoded._id);
+        await saveToken(user._id, newRefreshToken);
 
         res.status(200).json({
             accessToken: newAccessToken,
@@ -114,6 +114,7 @@ export const refreshToken = async (req, res) => {
 export const getAboutUser = async (req, res) => {
     try {
         const user = await User.findById(req.userId).select("-password")
+        console.log(user)
 
         if (!user) {
             res.status(404).json({ message: "Пользователь не найден" })

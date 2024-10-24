@@ -5,16 +5,16 @@ import { AppDispatch } from "@/app/providers/StoreProvider"
 import { userActions } from "./slice/userSlice"
 import { toast } from "react-toastify"
 import { getCurrentUser } from "./selectors/getCurrentUser"
+import { getIsUserLoaded } from "./selectors/getIsUserLoaded"
 import { useAboutMeQuery } from "./api/userApi"
-// import { getCurrentUser } from "./selectors/getCurrentUser"
 
 export const useAuth = () => {
     const dispatch = useDispatch<AppDispatch>()
     const { refetch } = useAboutMeQuery()
+    const isLoaded = useSelector(getIsUserLoaded)
 
     const login = (data: UserLoginData) => {
         dispatch(userActions.setAuthData(data))
-        // localStorage.setItem(USER.USER_DATA, JSON.stringify(data.user))
         localStorage.setItem(USER.REFRESH_TOKEN, JSON.stringify(data.refreshToken))
         localStorage.setItem(USER.ACCESS_TOKEN, JSON.stringify(data.accessToken))
         toast.success(data.message)
@@ -41,6 +41,7 @@ export const useAuth = () => {
         logout,
         setUserData,
         currentUser,
-        getMe
+        getMe,
+        isLoaded
     }
 }

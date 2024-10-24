@@ -5,7 +5,6 @@ import jwt from 'jsonwebtoken';
 
 export const authMiddleware = (req, res, next) => {
     const authHeader = req.header('Authorization');
-    console.log('Authorization Header:', authHeader);
 
     if (!authHeader) {
         return res.status(401).json({ error: 'Токен не предоставлен' });
@@ -14,8 +13,8 @@ export const authMiddleware = (req, res, next) => {
 
     if (token) {
         try {
-            const decoded = jwt.verify(token, process.env.JWT_SECRET);
-            req.userId = decoded.id;
+            const decoded = jwt.verify(token, process.env.JWT_ACCESS_SECRET);
+            req.userId = decoded._id;
             next();
             
         } catch (error) {

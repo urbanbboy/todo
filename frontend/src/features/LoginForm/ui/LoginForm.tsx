@@ -42,7 +42,6 @@ const LoginForm = () => {
                                 replace: true,
                             });
                         }
-
                         navigate(RouteNames.TODO_PAGE);
                     });
             })

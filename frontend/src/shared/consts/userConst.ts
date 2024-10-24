@@ -1,5 +1,4 @@
 export enum USER {
-    USER_DATA = "USER_DATA",
     ACCESS_TOKEN = "ACCESS_TOKEN",
     REFRESH_TOKEN = "REFRESH_TOKEN"
 }

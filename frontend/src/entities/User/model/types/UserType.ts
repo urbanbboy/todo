@@ -34,6 +34,7 @@ export interface UserLogoutData {
 export interface UserState {
     userAuthData: userAuthData | undefined;
     userData: UserData | undefined;
+    isLoaded: boolean;
 }
 
 export interface AboutMeResponse {

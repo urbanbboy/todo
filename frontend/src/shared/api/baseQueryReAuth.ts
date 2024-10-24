@@ -29,7 +29,6 @@ export const baseQueryWithReauth: BaseQueryFn<
             try {
                 if (localStorage.getItem(USER.REFRESH_TOKEN)) {
                     const refreshToken = JSON.parse(localStorage.getItem(USER.REFRESH_TOKEN) || '""');
-                    console.log(refreshToken)
                     const refreshResult = await baseQuery(
                         {
                             url: "/auth/refresh-token",
@@ -42,12 +41,17 @@ export const baseQueryWithReauth: BaseQueryFn<
                         extraOptions
                     );
                     if (refreshResult.data) {
-                        console.log(refreshResult.data)
                         const { accessToken, refreshToken } = refreshResult.data as RefreshTokenResponse
 
                         api.dispatch(userActions.setAuthData(refreshResult.data as UserLoginData));
                         localStorage.setItem(USER.ACCESS_TOKEN, JSON.stringify(accessToken));
                         localStorage.setItem(USER.REFRESH_TOKEN, JSON.stringify(refreshToken));
+
+                        (args as FetchArgs).headers = {
+                            ...((args as FetchArgs).headers || {}),
+                            Authorization: `Bearer ${accessToken}`,
+                        };
+
                         result = await baseQuery(args, api, extraOptions);
                     } else {
                         api.dispatch(userActions.logout());

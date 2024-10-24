@@ -6,6 +6,7 @@ import { USER } from "@/shared/consts/userConst"
 const initialState: UserState = {
     userAuthData: undefined,
     userData: undefined,
+    isLoaded: false,
 }
 
 export const userSlice = createSlice({
@@ -20,10 +21,10 @@ export const userSlice = createSlice({
             state.userData = undefined
             localStorage.removeItem(USER.REFRESH_TOKEN)
             localStorage.removeItem(USER.ACCESS_TOKEN)
-            localStorage.removeItem(USER.USER_DATA)
         },
         setUserData: (state, action: PayloadAction<UserData | undefined>) => {
             state.userData = action.payload
+            state.isLoaded = true
         }
     }
 })

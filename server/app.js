@@ -6,7 +6,6 @@ import dotenv from 'dotenv';
 import {router as authRoute} from './routes/auth.js'
 import {router as todoRoute} from './routes/todo.js'
 
-// export const JWT_SECRET = 'jljksdafu929320rif024f'
 const app = express()
 dotenv.config();
 
@@ -28,13 +27,12 @@ app.use('/api/todos', todoRoute)
 
 
 
-const port = 8000
-
+const PORT = process.env.PORT || 5000
 const start = async () => {
     try {
-        await mongoose.connect('mongodb+srv://talant:5apEwHzqSzuMD3ok@cluster0.iosu7.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
-        app.listen(port, () => {
-            console.log(`server started on port ${port}`)
+        await mongoose.connect(process.env.DB_URL)
+        app.listen(process.env.PORT, () => {
+            console.log(`server started on port ${PORT}`)
         })
     } catch (error) {
         console.log(error)

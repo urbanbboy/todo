@@ -1,16 +1,16 @@
 import { useCallback, useState } from "react";
-import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import { toast } from "react-toastify";
+import { Spin } from "antd";
 import { EditableTodoModal } from "@/features/EditTodo";
 import { CheckBox } from "@/shared/ui/ChecBox";
 import { getIsReadOnly } from "../../model/selectors/getIsReadOnly";
 import { EditData, ErrorResponse, ITodo } from "../../model/types/TodoType";
 import { useDeleteTodoMutation, useEditTodoMutation } from "../../model/api/todoApi";
-import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { AppDispatch } from "@/app/providers/StoreProvider";
 import { todoActions } from "../../model/slice/todoSlice";
 import cls from './TodoListItem..module.scss';
-import { Spin } from "antd";
 
 interface TodoListItemProps {
     todo: ITodo;
