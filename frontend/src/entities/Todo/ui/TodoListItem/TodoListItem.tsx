@@ -4,7 +4,6 @@ import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { toast } from "react-toastify";
 import { Spin } from "antd";
 import { EditableTodoModal } from "@/features/EditTodo";
-import { CheckBox } from "@/shared/ui/ChecBox";
 import { getIsReadOnly } from "../../model/selectors/getIsReadOnly";
 import { EditData, ErrorResponse, ITodo } from "../../model/types/TodoType";
 import { useDeleteTodoMutation, useEditTodoMutation } from "../../model/api/todoApi";
@@ -77,6 +76,12 @@ export const TodoListItem = (props: TodoListItemProps) => {
             .unwrap()
     }, [todo._id, editedTodo, editTodo]);
 
+    const onCancelEdit = () => {
+        setEditedTodo(todo)
+        dispatch(todoActions.setReadOnly(true));
+        setModalVisible(false);
+    }
+
     const todoClasses = [
         cls.todoItem,
         todo.completed ? cls.todoItemCompleted : '',
@@ -89,11 +94,6 @@ export const TodoListItem = (props: TodoListItemProps) => {
                 <h3 onClick={onClickOpenModal} className={cls.todoItemTitle}>
                     {todo.text}
                 </h3>
-                <CheckBox
-                    id={todo._id}
-                    checked={todo.completed}
-                    onChange={onChangeCompleted}
-                />
             </div>
             <EditableTodoModal
                 isOpen={modalVisible}
@@ -103,6 +103,7 @@ export const TodoListItem = (props: TodoListItemProps) => {
                 description={editedTodo.description}
                 completed={editedTodo.completed}
                 onSaveTodo={onSaveTodo}
+                onCancelEdit={onCancelEdit}
                 handleDelete={handleDelete}
                 onChangeCompleted={onChangeCompleted}
                 onChangeText={(newText) => setEditedTodo({ ...editedTodo, text: newText })}

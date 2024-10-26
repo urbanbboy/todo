@@ -27,6 +27,10 @@ export interface UserLoginError {
     message: string;
 }
 
+export interface UserRegisterError {
+    message: string;
+}
+
 export interface UserLogoutData {
     message: string;
 }

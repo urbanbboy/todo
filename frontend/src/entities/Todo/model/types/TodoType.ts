@@ -6,7 +6,7 @@ export interface ITodo {
     _id: string;
     text: string;
     description: string;
-    completed: boolean;
+    completed: boolean | undefined;
     userId: string;
 }
 

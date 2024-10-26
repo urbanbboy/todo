@@ -49,6 +49,19 @@ export const todoApi = baseApiWithReAuth.injectEndpoints({
                 method: "PUT",
                 body: todo.data
             }),
+            async onQueryStarted({ todoId, data }, { dispatch, queryFulfilled }) {
+                const patchResult = dispatch(
+                    todoApi.util.updateQueryData('getTodos', undefined, (draft) => {
+                        const todo = draft.find((item) => item._id === todoId)
+                        if(todo) todo.completed = data.completed
+                    })
+                )
+                try {
+                    await queryFulfilled
+                } catch {
+                    patchResult.undo()
+                }
+            },
             invalidatesTags: ["todo"]
         }),
 

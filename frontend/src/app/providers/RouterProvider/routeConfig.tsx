@@ -1,5 +1,6 @@
 import { LoginPage } from "@/pages/LoginPage";
 import { NotFoundPage } from "@/pages/NotFoundPage";
+import { RegisterPage } from "@/pages/RegisterPage";
 import { TodoPage } from "@/pages/TodoPage";
 import { ReactNode } from "react";
 
@@ -30,6 +31,12 @@ export const routeConfig: Route[] = [
     {
         path: RouteNames.LOGIN_PAGE,
         element: <LoginPage/>,
+        private: false,
+        layout: false
+    },
+    {
+        path: RouteNames.REGISTER_PAGE,
+        element: <RegisterPage/>,
         private: false,
         layout: false
     },

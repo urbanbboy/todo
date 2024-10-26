@@ -1,7 +1,7 @@
 import { DragDropContext, DropResult } from '@hello-pangea/dnd';
 import { Loader } from "@/shared/ui/Loader";
 import { ITodo } from "../../model/types/TodoType";
-import { useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import cls from './TodoList.module.scss';
 import { DropItem } from '../DropItem/DropItem';
 import { useEditTodoMutation } from '../../model/api/todoApi';
@@ -13,32 +13,45 @@ interface TodoListProps {
 
 export const TodoList = (props: TodoListProps) => {
     const { todos, isLoading } = props;
+    const [todoList, setTodoList] = useState(todos)
     const [editTodo] = useEditTodoMutation();
 
-    const unfinishedTodos = todos.filter((todo) => !todo.completed);
-    const completedTodos = todos.filter((todo) => todo.completed);
+    useEffect(() => {
+        setTodoList(todos)
+    }, [todos])
 
-    // useEffect(() => {
-    //     setTodoList(todos);
-    // }, [todos]);
+    const unfinishedTodos = todoList.filter((todo) => !todo.completed);
+    const completedTodos = todoList.filter((todo) => todo.completed);
 
     const handleOnDragEnd = useCallback(async (result: DropResult) => {
         const { destination, draggableId } = result;
         if (!destination) return;
 
-        const draggedTodo = todos.find(todo => todo._id === draggableId)
-
+        const draggedTodo = todoList.find(todo => todo._id === draggableId);
         if (!draggedTodo) return;
 
-        const isMovedToCompleted = destination.droppableId === 'completed' && !draggedTodo.completed
+        const isMovedToCompleted = destination.droppableId === 'completed' && !draggedTodo.completed;
         const isMovedToUnfinished = destination.droppableId === 'unfinished' && draggedTodo.completed;
 
-        if (isMovedToCompleted) {
-            editTodo({ todoId: draggedTodo._id, data: { ...draggedTodo, completed: true } })
-        } else if (isMovedToUnfinished) {
-            editTodo({ todoId: draggedTodo._id, data: { ...draggedTodo, completed: false } })
+        setTodoList((prev) =>
+            prev.map((todo) =>
+                todo._id === draggableId
+                    ? { ...todo, completed: isMovedToCompleted ? true : isMovedToUnfinished ? false : todo.completed }
+                    : todo
+            )
+        );
+
+        try {
+            if (isMovedToCompleted || isMovedToUnfinished) {
+                await editTodo({
+                    todoId: draggedTodo._id,
+                    data: { ...draggedTodo, completed: isMovedToCompleted }
+                }).unwrap();
+            }
+        } catch {
+            setTodoList(todos);
         }
-    }, [todos, editTodo])
+    }, [todoList, editTodo, todos]);
 
     if (!isLoading && !todos.length) {
         return (

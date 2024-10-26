@@ -21,7 +21,7 @@ export const ReactModal = (props: ReactModalProps) => {
 
     const modalStyles = {
         modal: {
-            background: '#77545D',
+            background: 'var(--modal-bg-color)',
             fontFamily: 'Inter',
             borderRadius: '10px',
             width,

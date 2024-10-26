@@ -13,8 +13,8 @@ interface DropItemProps {
 const droppableStyles = {
     padding: '10px',
     background: 'var(--primary-color)',
-    borderRadius: '10px'
-
+    borderRadius: '10px',
+    boxShadow: 'var(--box-shadow)'
 }
 
 export const DropItem = (props: DropItemProps) => {

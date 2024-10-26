@@ -1,4 +1,4 @@
-import { useCallback } from 'react'
+import { memo, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Avatar, Button, Layout } from 'antd';
 import { AppDispatch } from '@/app/providers/StoreProvider';
@@ -12,6 +12,14 @@ import { getSidebarCollapsed } from '../model/selectors/getSidebarCollapsed';
 import { headerActions } from '../model/slice/headerSlice';
 import cls from './Header.module.scss'
 
+const UserAvatar = memo(() => {
+    return (
+        <Avatar
+            className={cls.avatar}
+            icon={<UserOutlined />}
+        />
+    )
+})
 
 export const Header = () => {
     const dispatch = useDispatch<AppDispatch>()
@@ -33,10 +41,7 @@ export const Header = () => {
             />
             <div className={cls.userInfo}>
                 <span className={cls.username}>{user?.username}</span>
-                <Avatar
-                    className={cls.avatar}
-                    icon={<UserOutlined />}
-                />
+                <UserAvatar />
             </div>
 
         </Layout.Header>

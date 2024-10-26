@@ -1,11 +1,11 @@
-.loginFormWrapper {
+.registerFormWrapper {
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.loginForm {
+.registerForm {
     padding: 80px 140px;
     background-color: #F1ECE6;
     border-radius: 15px;
@@ -38,15 +38,14 @@
     color: #D20505;
 }
 
-.registerLink {
+.loginLink {
     margin-top: 20px;
     display: flex;
-    align-items: center;
+    justify-content: center;
     gap: 5px;
-    text-align: center;
 }
 
-.registerTitle {
+.loginTitle {
     color: #FFF;
     font-size: 13px;
     padding-top: 3px;
