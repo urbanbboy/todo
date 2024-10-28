@@ -11,6 +11,6 @@ export default defineConfig({
         port: 3000
     },
     define: {
-        __BASE_URL__: JSON.stringify('http://localhost:8000/api')
+        __BASE_URL__: JSON.stringify('https://todo-4ehd.onrender.com/api')
     }
 })
