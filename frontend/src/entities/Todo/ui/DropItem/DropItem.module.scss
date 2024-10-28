@@ -1,0 +1,13 @@
+.droppable {
+    width: 350px;
+    padding: 10px;
+    background: var(--primary-color);
+    border-radius: 10px;
+    box-shadow: var(--box-shadow);
+}
+
+@media (max-width: 1030px) {
+    .droppable {
+        width: 250px;
+    }
+}

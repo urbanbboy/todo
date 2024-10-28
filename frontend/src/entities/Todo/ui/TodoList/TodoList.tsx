@@ -5,6 +5,7 @@ import { useCallback, useEffect, useState } from "react";
 import cls from './TodoList.module.scss';
 import { DropItem } from '../DropItem/DropItem';
 import { useEditTodoMutation } from '../../model/api/todoApi';
+import { toast } from 'react-toastify';
 
 interface TodoListProps {
     todos: ITodo[];
@@ -46,7 +47,11 @@ export const TodoList = (props: TodoListProps) => {
                 await editTodo({
                     todoId: draggedTodo._id,
                     data: { ...draggedTodo, completed: isMovedToCompleted }
-                }).unwrap();
+                })
+                    .unwrap()
+                    .then(() => {
+                        toast('Задача обновлена')
+                    })
             }
         } catch {
             setTodoList(todos);

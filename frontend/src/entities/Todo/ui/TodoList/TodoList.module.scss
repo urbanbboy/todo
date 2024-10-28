@@ -20,3 +20,10 @@
     justify-content: space-evenly;
     gap: 40px;
 }
+
+@media (max-width: 800px) {
+    .dropWrapper {
+        display: flex;
+        flex-direction: column;
+    }
+}

@@ -47,6 +47,7 @@ export const TodoListItem = (props: TodoListItemProps) => {
             .then(() => {
                 dispatch(todoActions.setReadOnly(true))
                 setModalVisible(false)
+                toast.success("Задача обновлена")
             })
             .catch((error: FetchBaseQueryError) => {
                 const data = error.data as ErrorResponse

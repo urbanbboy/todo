@@ -85,17 +85,14 @@ export const EditableTodoModal = (props: EditableTodoModalProps) => {
                                     Сохранить
                                 </Button>
                             </Spin>
-                            <Spin spinning={isEditLoading}>
-                                <Button
-                                    onClick={onCancelEdit}
-                                    className={cls.modalButtonsCancel}
-                                    disabled={isEditLoading}
-                                    icon={<CloseOutlined />}
-                                    iconPosition="start"
-                                >
-                                    Отмена
-                                </Button>
-                            </Spin>
+                            <Button
+                                onClick={onCancelEdit}
+                                className={cls.modalButtonsCancel}
+                                icon={<CloseOutlined />}
+                                iconPosition="start"
+                            >
+                                Отмена
+                            </Button>
                         </>
                     )}
                     <Spin spinning={isDeleteLoading}>
